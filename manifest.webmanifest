@@ -1,0 +1,26 @@
+{
+  "name": "Adrien le Space Marine — CE1",
+  "short_name": "Dichou CE1",
+  "description": "Jeu éducatif CE1 Warhammer 40k pour Adrien : combats des monstres, fais évoluer ton armure Space Marine et gagne des minutes de Switch !",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#070c1d",
+  "theme_color": "#0d152b",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

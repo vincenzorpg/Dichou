@@ -16,7 +16,7 @@ const ARMORS = [
   },
   {
     tier: 2,
-    minLevel: 3,
+    minLevel: 5,
     name: "Space Marine Tactique",
     title: "Frère Adrien",
     image: "assets/images/armor_2.jpg",
@@ -29,7 +29,7 @@ const ARMORS = [
   },
   {
     tier: 3,
-    minLevel: 6,
+    minLevel: 12,
     name: "Sergent Vétéran",
     title: "Sergent Adrien",
     image: "assets/images/armor_3.jpg",
@@ -42,7 +42,7 @@ const ARMORS = [
   },
   {
     tier: 4,
-    minLevel: 10,
+    minLevel: 25,
     name: "Capitaine Terminator",
     title: "Capitaine Adrien",
     image: "assets/images/armor_4.jpg",
@@ -55,7 +55,7 @@ const ARMORS = [
   },
   {
     tier: 5,
-    minLevel: 15,
+    minLevel: 50,
     name: "Primarque Légendaire",
     title: "Primarque Adrien",
     image: "assets/images/armor_5.jpg",
@@ -363,7 +363,16 @@ const ADRIEN_PRAISES = [
   "L'Imperium est fier de toi !"
 ];
 
-const XP_PER_LEVEL = (level) => 80 + (level - 1) * 35;
+// Progression longue durée sur toute l'année de CE1 (~121 000 XP cumulés pour le Niv. 50 Primarque !)
+const XP_PER_LEVEL = (level) => 150 + (level - 1) * 95;
+
+function getTotalXpForLevel(targetLevel) {
+  let total = 0;
+  for (let lv = 1; lv < targetLevel; lv++) {
+    total += XP_PER_LEVEL(lv);
+  }
+  return total;
+}
 
 function getArmorForLevel(level) {
   let current = ARMORS[0];

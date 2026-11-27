@@ -33,8 +33,16 @@ body {
   background: radial-gradient(circle at 20% 15%, #162447 0%, #0b132b 45%, #060917 100%);
   color: var(--text-main);
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+button {
+  touch-action: manipulation;
 }
 
 /* Animated Starfield */
@@ -1160,6 +1168,85 @@ body {
   justify-content: space-between;
   padding: 5px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.install-btn {
+  border-color: rgba(250, 204, 21, 0.55);
+  color: #fde047;
+}
+
+/* Mobile compact layout */
+@media (max-width: 540px) {
+  .app-shell {
+    padding: 8px 10px 24px;
+  }
+  .hud-bar {
+    padding: 8px 10px;
+    gap: 8px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+  }
+  .hud-avatar {
+    width: 44px;
+    height: 44px;
+  }
+  .xp-bar {
+    width: 100px;
+  }
+  .switch-pill {
+    padding: 5px 12px;
+  }
+  .switch-count {
+    font-size: 0.96rem;
+  }
+  .icon-btn {
+    padding: 7px 9px;
+    font-size: 0.84rem;
+  }
+  .hero-portrait-frame {
+    width: 170px;
+    height: 170px;
+  }
+  .arena-stage {
+    gap: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .speech-bubble {
+    font-size: 0.78rem;
+    padding: 6px 8px;
+    min-height: 36px;
+  }
+  .fighter-frame {
+    width: 112px;
+    height: 112px;
+    border-width: 3px;
+  }
+  .fighter-name {
+    font-size: 0.9rem;
+  }
+  .hp-hearts {
+    font-size: 1rem;
+  }
+  .reward-chip {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+  }
+  .question-panel {
+    padding: 14px;
+  }
+  .question-prompt {
+    font-size: 1.15rem;
+  }
+  .choice-btn {
+    padding: 14px 12px;
+    font-size: 1.1rem;
+    min-height: 54px;
+  }
+  .clock-svg {
+    width: 120px;
+    height: 120px;
+  }
 }
 
 /* Confetti */

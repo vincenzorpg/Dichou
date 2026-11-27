@@ -4,12 +4,13 @@ Un jeu éducatif de combat galactique inspiré de **Warhammer 40,000** (version 
 
 ## ✨ Fonctionnalités
 
-- **Évolution d'Armure Space Marine (5 niveaux)** :
+- **Évolution d'Armure Space Marine (5 niveaux — quête longue durée CE1)** :
   1. Scout de l'Espace (Niv. 1)
-  2. Space Marine Tactique (Niv. 3)
-  3. Sergent Vétéran (Niv. 6)
-  4. Capitaine Terminator (Niv. 10)
-  5. Primarque Légendaire (Niv. 15)
+  2. Space Marine Tactique (Niv. 5 — 1 170 XP)
+  3. Sergent Vétéran (Niv. 12 — 7 260 XP)
+  4. Capitaine Terminator (Niv. 25 — 30 960 XP)
+  5. Primarque Légendaire (Niv. 50 — 121 275 XP !)
+- **Appli Téléphone installable (PWA + Mode Hors-Ligne)** : fonctionne sur Android et iPhone en plein écran, avec icône dédiée sur l'écran d'accueil et jeu sans Internet.
 - **Bestiaire Warhammer 40k illustré & rigolo** : Grot Farceur, Nurgling Rigolo, Termagant Tyranide, Boyz Ork « Kass'Tout », Guerrier Nécron Grinçant, Squig Glouton, Marine du Chaos Grognon, et le **Big Boss Gorgutz** (+5 min de Switch !).
 - **Tout le programme de CE1** :
   - **Calculia** : additions, soustractions, tables (×2, ×3, ×4, ×5, ×10), doubles/moitiés, compléments à 10 et 100, petits problèmes.

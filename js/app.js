@@ -75,7 +75,10 @@ function renderHUD() {
 
   const nextArmor = ARMORS.find((a) => a.minLevel > state.level);
   if (nextArmor) {
-    $("home-next-armor").textContent = `🔒 Prochaine armure au Niveau ${nextArmor.minLevel} : ${nextArmor.name} !`;
+    const totalXpNow = getTotalXpForLevel(state.level) + state.xp;
+    const totalXpTarget = getTotalXpForLevel(nextArmor.minLevel);
+    const remainingXp = Math.max(0, totalXpTarget - totalXpNow);
+    $("home-next-armor").textContent = `🔒 Prochaine armure au Niveau ${nextArmor.minLevel} : ${nextArmor.name} (encore ${remainingXp.toLocaleString("fr-FR")} XP !)`;
   } else {
     $("home-next-armor").textContent = "👑 Armure Ultime débloquée ! Tu es le Primarque du CE1 !";
   }
@@ -408,12 +411,13 @@ function renderGallery() {
   if (galleryTab === "armors") {
     ARMORS.forEach((a) => {
       const unlocked = state.level >= a.minLevel;
+      const reqXp = getTotalXpForLevel(a.minLevel);
       const card = document.createElement("div");
       card.className = `gallery-card ${unlocked ? "unlocked" : "locked"}`;
       card.innerHTML = `
         <img src="${a.image}" alt="${a.name}" />
         <h4>${unlocked ? `✅ ${a.name}` : `🔒 Niveau ${a.minLevel}`}</h4>
-        <p style="color:#38bdf8; font-weight:700; margin-bottom:4px;">${unlocked ? `⚔️ ${a.weapon}` : "Armure secrète"}</p>
+        <p style="color:#38bdf8; font-weight:700; margin-bottom:4px;">${unlocked ? `⚔️ ${a.weapon}` : `⭐ ${reqXp.toLocaleString("fr-FR")} XP cumulés`}</p>
         <p>${unlocked ? a.description : `Atteins le niveau ${a.minLevel} pour débloquer cette armure !`}</p>
       `;
       container.appendChild(card);
@@ -635,8 +639,54 @@ function bindEvents() {
 }
 
 // ==========================================
+// PWA : INSTALLATION TÉLÉPHONE & HORS-LIGNE
+// ==========================================
+let deferredInstallPrompt = null;
+
+function setupPWA() {
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  }
+
+  // Cacher le bouton si déjà installé en mode appli
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  if (isStandalone && $("btn-install-app")) {
+    $("btn-install-app").style.display = "none";
+  }
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    if ($("install-native-wrap")) {
+      $("install-native-wrap").style.display = "block";
+    }
+  });
+
+  if ($("btn-install-app")) {
+    $("btn-install-app").addEventListener("click", () => {
+      sfx.click();
+      openModal("modal-install");
+    });
+  }
+
+  if ($("btn-trigger-install")) {
+    $("btn-trigger-install").addEventListener("click", async () => {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      const { outcome } = await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      if (outcome === "accepted") {
+        closeModal("modal-install");
+        $("btn-install-app").style.display = "none";
+      }
+    });
+  }
+}
+
+// ==========================================
 // DÉMARRAGE
 // ==========================================
 renderPlanets();
 renderHUD();
 bindEvents();
+setupPWA();

@@ -2,7 +2,14 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d152b" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Dichou CE1" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
   <title>Adrien le Space Marine — Aventure CE1 &amp; Minutes de Switch</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,6 +42,7 @@
       </div>
 
       <div class="hud-actions">
+        <button id="btn-install-app" class="icon-btn install-btn" title="Installer l'appli sur téléphone">📲 Appli</button>
         <button id="btn-gallery" class="icon-btn" title="Armures et Bestiaire">🛡️ Armurerie</button>
         <button id="btn-sound" class="icon-btn" title="Activer / couper le son">🔊</button>
         <button id="btn-parents" class="icon-btn" title="Espace Parents (PIN)">🔒 Parents</button>
@@ -190,6 +198,34 @@
         <button id="tab-monsters" class="tab-btn">👾 Bestiaire Warhammer 40k</button>
       </div>
       <div id="gallery-content" class="gallery-grid"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: INSTALLER SUR TÉLÉPHONE -->
+  <div id="modal-install" class="modal-backdrop">
+    <div class="modal-card">
+      <button class="modal-close" data-close="modal-install">✕</button>
+      <h2 style="color:#38bdf8; margin-bottom:10px;">📲 Installer sur Téléphone</h2>
+      <p style="color:#e2e8f0; margin-bottom:14px;">
+        Installe <strong>Adrien le Space Marine</strong> sur l'écran d'accueil pour y jouer en plein écran et même <strong>sans Internet</strong> !
+      </p>
+      <div id="install-native-wrap" style="display:none; margin-bottom:14px;">
+        <button id="btn-trigger-install" class="btn-gold btn-full">📲 Installer maintenant</button>
+      </div>
+      <div class="parent-section" style="text-align:left;">
+        <h3>🍎 Sur iPhone / iPad (Safari)</h3>
+        <p style="font-size:0.92rem; color:#cbd5e1; line-height:1.45;">
+          1. Appuie sur le bouton <strong>Partager</strong> (carré avec flèche vers le haut) en bas de Safari.<br/>
+          2. Choisis <strong>« Sur l'écran d'accueil »</strong> puis appuie sur <strong>Ajouter</strong>.
+        </p>
+      </div>
+      <div class="parent-section" style="text-align:left;">
+        <h3>🤖 Sur Android (Chrome)</h3>
+        <p style="font-size:0.92rem; color:#cbd5e1; line-height:1.45;">
+          1. Appuie sur le menu <strong>⋮</strong> en haut à droite de Chrome.<br/>
+          2. Choisis <strong>« Installer l'application »</strong> ou <strong>« Ajouter à l'écran d'accueil »</strong>.
+        </p>
+      </div>
     </div>
   </div>
 
