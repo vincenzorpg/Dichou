@@ -930,7 +930,8 @@ body {
 }
 
 .modal-card {
-  background: linear-gradient(180deg, #162246, #0d152b);
+  background-color: #0d152b;
+  background-image: linear-gradient(180deg, #162246, #0d152b);
   border: 3px solid var(--blue);
   border-radius: 24px;
   max-width: 580px;
@@ -1030,7 +1031,7 @@ body {
 .tab-btn.active {
   background: linear-gradient(135deg, #0284c7, #2563eb);
   border-color: var(--blue);
-  color: #fff;
+  color: #ffffff !important;
 }
 
 .gallery-grid {

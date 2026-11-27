@@ -180,6 +180,9 @@ function updateBattleBars() {
 }
 
 function loadNextQuestion() {
+  if (document.activeElement && document.activeElement.blur) {
+    document.activeElement.blur();
+  }
   battle.locked = false;
   battle.question = generateQuestion(battle.planetId, state.settings.difficulty);
 

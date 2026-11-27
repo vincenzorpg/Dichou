@@ -319,7 +319,7 @@ const PLANETS = [
   {
     id: "numeration",
     name: "Planète Numéria",
-    subtitle: "Lire l'heure, centaines/dizaines, euros, < > =",
+    subtitle: "Lire l'heure, centaines, euros, < > =",
     icon: "⏰",
     color: "#10b981",
     gradient: "linear-gradient(135deg, #059669, #0d9488)",
