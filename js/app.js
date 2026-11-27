@@ -637,7 +637,7 @@ function bindEvents() {
       $("parent-dashboard").style.display = "block";
       renderParentDashboard();
     } else {
-      $("parent-pin-error").textContent = "Code incorrect (code par défaut : 1234)";
+      $("parent-pin-error").textContent = "Mot de passe incorrect";
     }
   };
   $("btn-unlock-parents").addEventListener("click", checkPin);

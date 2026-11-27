@@ -32,7 +32,7 @@ const DEFAULT_STATE = {
     difficulty: "milieu", // debut | milieu | fin
     dailySwitchCap: 45,   // Plafond journalier en minutes (défaut : 45 min/jour)
     soundEnabled: true,
-    parentPin: "1234"
+    parentPin: "1992"
   }
 };
 
@@ -58,6 +58,9 @@ function loadState() {
       monstersLog: { ...(parsed.monstersLog || {}) },
       switchHistory: Array.isArray(parsed.switchHistory) ? parsed.switchHistory : []
     };
+    if (merged.settings.parentPin === "1234") {
+      merged.settings.parentPin = "1992";
+    }
     return syncDailyCounter(merged);
   } catch {
     return structuredClone(DEFAULT_STATE);

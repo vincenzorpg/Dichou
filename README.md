@@ -18,7 +18,7 @@ Un jeu éducatif de combat galactique inspiré de **Warhammer 40,000** (version 
   - **Grammatika** : verbe, nom, adjectif, sujet, pluriel, féminin, conjugaison CE1 (présent, futur, imparfait), ponctuation.
   - **Orthographia** : sons pièges (`s/ss`, `c/ç`, `g/gu/ge`, `m` devant `m/b/p`), accords, homophones (`a/à`, `et/est`, `on/ont`, `son/sont`).
   - **Exploratia** : saisons, mois, jours, animaux, vivant/non-vivant, états de l'eau, espace et géographie.
-- **Compteur de Minutes de Switch + Espace Parents (Code PIN par défaut : `1234`)** :
+- **Compteur de Minutes de Switch + Espace Parents protégé par mot de passe** :
   - Suivi des minutes gagnées et bouton pour encaisser les minutes utilisées.
   - Bilan pédagogique par matière.
   - Réglage de la difficulté (`Début CE1`, `Milieu CE1`, `Fin CE1`) et multiplicateur de minutes.
