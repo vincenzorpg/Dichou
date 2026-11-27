@@ -45,6 +45,7 @@
       </div>
 
       <div class="hud-actions">
+        <span id="cloud-status-badge" class="icon-btn" style="cursor:default; font-size:0.8rem;" title="État de synchronisation Firebase">☁️ ...</span>
         <button id="btn-install-app" class="icon-btn install-btn" title="Installer l'appli sur téléphone">📲 Appli</button>
         <button id="btn-gallery" class="icon-btn" title="Armures et Bestiaire">🛡️ Armurerie</button>
         <button id="btn-sound" class="icon-btn" title="Activer / couper le son">🔊</button>
@@ -268,6 +269,8 @@
           </p>
           <p style="font-size:0.92rem; color:#93c5fd; margin-bottom:8px;">
             Gagné aujourd'hui : <strong id="parent-daily-progress">0 / 45 min</strong>
+            • Cloud : <strong id="parent-cloud-status" style="color:#4ade80;">...</strong>
+            <button id="btn-force-sync" class="icon-btn" style="padding:3px 9px; font-size:0.78rem; margin-left:6px;">🔄 Sync</button>
           </p>
           <div class="spend-row">
             <button class="btn-gold" data-spend="5">Encaisser 5 min</button>

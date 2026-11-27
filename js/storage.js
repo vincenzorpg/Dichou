@@ -1,6 +1,7 @@
-// Sauvegarde locale (localStorage) de la progression d'Adrien & des minutes de Switch
+// Sauvegarde locale (localStorage) + Synchronisation Cloud Firebase Realtime Database
 
 const STORAGE_KEY = "dichou_space_marine_ce1_v1";
+const FIREBASE_DB_URL = "https://dichou-gaming-default-rtdb.europe-west1.firebasedatabase.app/profiles/adrien.json";
 
 function getTodayKey() {
   const d = new Date();
@@ -11,6 +12,7 @@ function getTodayKey() {
 }
 
 const DEFAULT_STATE = {
+  updatedAt: 0,
   level: 1,
   xp: 0,
   switchMinutes: 0,
@@ -45,33 +47,118 @@ function syncDailyCounter(st) {
   return st;
 }
 
+function normalizeState(rawObj) {
+  if (!rawObj || typeof rawObj !== "object") return structuredClone(DEFAULT_STATE);
+  const merged = {
+    ...structuredClone(DEFAULT_STATE),
+    ...rawObj,
+    stats: { ...structuredClone(DEFAULT_STATE.stats), ...(rawObj.stats || {}) },
+    settings: { ...structuredClone(DEFAULT_STATE.settings), ...(rawObj.settings || {}) },
+    monstersLog: { ...(rawObj.monstersLog || {}) },
+    switchHistory: Array.isArray(rawObj.switchHistory) ? rawObj.switchHistory : []
+  };
+  if (merged.settings.parentPin === "1234") {
+    merged.settings.parentPin = "1992";
+  }
+  return syncDailyCounter(merged);
+}
+
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return structuredClone(DEFAULT_STATE);
-    const parsed = JSON.parse(raw);
-    const merged = {
-      ...structuredClone(DEFAULT_STATE),
-      ...parsed,
-      stats: { ...structuredClone(DEFAULT_STATE.stats), ...(parsed.stats || {}) },
-      settings: { ...structuredClone(DEFAULT_STATE.settings), ...(parsed.settings || {}) },
-      monstersLog: { ...(parsed.monstersLog || {}) },
-      switchHistory: Array.isArray(parsed.switchHistory) ? parsed.switchHistory : []
-    };
-    if (merged.settings.parentPin === "1234") {
-      merged.settings.parentPin = "1992";
-    }
-    return syncDailyCounter(merged);
+    return normalizeState(JSON.parse(raw));
   } catch {
     return structuredClone(DEFAULT_STATE);
   }
 }
 
-function saveState(state) {
+let cloudStatusCallback = null;
+function setCloudStatusListener(cb) {
+  cloudStatusCallback = cb;
+}
+
+function notifyCloudStatus(status, detail = "") {
+  if (cloudStatusCallback) cloudStatusCallback(status, detail);
+}
+
+let pushTimer = null;
+async function pushStateToCloud(state) {
+  try {
+    notifyCloudStatus("syncing", "Enregistrement sur Firebase...");
+    const res = await fetch(FIREBASE_DB_URL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(state)
+    });
+    if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        notifyCloudStatus("error", "Accès refusé (vérifie les Règles Firebase Realtime DB)");
+      } else {
+        notifyCloudStatus("error", `Erreur Firebase (${res.status})`);
+      }
+      return false;
+    }
+    notifyCloudStatus("ok", "Synchronisé ☁️");
+    return true;
+  } catch {
+    notifyCloudStatus("offline", "Hors-ligne (sauvegardé sur l'appareil)");
+    return false;
+  }
+}
+
+function saveState(state, skipCloud = false) {
+  state.updatedAt = Date.now();
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch (e) {
     console.warn("Impossible de sauvegarder:", e);
+  }
+  if (!skipCloud) {
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(() => pushStateToCloud(state), 250);
+  }
+}
+
+async function syncWithCloud(localState) {
+  try {
+    notifyCloudStatus("syncing", "Synchronisation...");
+    const res = await fetch(FIREBASE_DB_URL, { cache: "no-store" });
+    if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        notifyCloudStatus("error", "Accès refusé (vérifie les Règles Firebase)");
+      } else {
+        notifyCloudStatus("error", `Erreur Firebase (${res.status})`);
+      }
+      return { state: localState, changed: false };
+    }
+    const cloudRaw = await res.json();
+    if (!cloudRaw) {
+      // Base vide : on envoie l'état local pour initialiser Firebase
+      if (!localState.updatedAt) localState.updatedAt = Date.now();
+      await pushStateToCloud(localState);
+      return { state: localState, changed: false };
+    }
+    const cloudState = normalizeState(cloudRaw);
+    const localTs = Number(localState.updatedAt || 0);
+    const cloudTs = Number(cloudState.updatedAt || 0);
+
+    if (cloudTs > localTs) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudState));
+      } catch {}
+      notifyCloudStatus("ok", "Synchronisé ☁️");
+      return { state: cloudState, changed: true };
+    } else if (localTs > cloudTs) {
+      await pushStateToCloud(localState);
+      return { state: localState, changed: false };
+    } else {
+      notifyCloudStatus("ok", "Synchronisé ☁️");
+      return { state: localState, changed: false };
+    }
+  } catch {
+    notifyCloudStatus("offline", "Mode hors-ligne");
+    return { state: localState, changed: false };
   }
 }
 

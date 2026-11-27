@@ -741,9 +741,61 @@ function setupPWA() {
 }
 
 // ==========================================
+// SYNCHRO CLOUD FIREBASE
+// ==========================================
+async function runCloudSync() {
+  const { state: synced, changed } = await syncWithCloud(state);
+  if (changed) {
+    state = synced;
+    sfx.setEnabled(state.settings.soundEnabled);
+    renderHUD();
+    if ($("parent-dashboard").style.display === "block") {
+      renderParentDashboard();
+    }
+  }
+}
+
+function setupCloudSync() {
+  setCloudStatusListener((status, detail) => {
+    const badge = $("cloud-status-badge");
+    const parentEl = $("parent-cloud-status");
+    const map = {
+      ok: { text: "☁️ Sync", color: "#4ade80" },
+      syncing: { text: "☁️ ...", color: "#38bdf8" },
+      offline: { text: "📴 Hors-ligne", color: "#facc15" },
+      error: { text: "⚠️ Cloud", color: "#f87171" }
+    };
+    const info = map[status] || map.offline;
+    if (badge) {
+      badge.textContent = info.text;
+      badge.style.color = info.color;
+      badge.title = detail || info.text;
+    }
+    if (parentEl) {
+      parentEl.textContent = detail || info.text;
+      parentEl.style.color = info.color;
+    }
+  });
+
+  if ($("btn-force-sync")) {
+    $("btn-force-sync").addEventListener("click", () => {
+      sfx.click();
+      runCloudSync();
+    });
+  }
+
+  runCloudSync();
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") runCloudSync();
+  });
+  setInterval(runCloudSync, 20000);
+}
+
+// ==========================================
 // DÉMARRAGE
 // ==========================================
 renderPlanets();
 renderHUD();
 bindEvents();
 setupPWA();
+setupCloudSync();

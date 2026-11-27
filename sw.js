@@ -1,6 +1,6 @@
 // Service Worker — Permet d'installer le jeu sur téléphone et d'y jouer 100% hors-ligne !
 
-const CACHE_NAME = "dichou-space-marine-v5";
+const CACHE_NAME = "dichou-space-marine-v6";
 
 const ASSETS_TO_CACHE = [
   "./",
@@ -47,6 +47,9 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+  if (event.request.url.includes("firebasedatabase.app") || event.request.url.includes("firebaseio.com")) {
+    return;
+  }
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
