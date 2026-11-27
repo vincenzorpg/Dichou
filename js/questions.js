@@ -539,7 +539,7 @@ function genMonde() {
 // ==========================================
 // POINT D'ENTRÉE PRINCIPAL
 // ==========================================
-export function generateQuestion(planetId, difficulty = "milieu") {
+function generateQuestion(planetId, difficulty = "milieu") {
   let target = planetId;
   if (planetId === "campagne") {
     target = pick(["calcul", "numeration", "grammaire", "orthographe", "monde"]);

@@ -24,5 +24,5 @@ Un jeu éducatif de combat galactique inspiré de **Warhammer 40,000** (version 
 
 ## ▶️ Lancer le jeu
 
-- **En ligne (GitHub Pages)** : activez GitHub Pages sur la branche `main` / `master` dans les paramètres du dépôt.
-- **En local** : lancez un petit serveur web dans ce dossier (ex: `python -m http.server 8765`) puis ouvrez `http://localhost:8765`.
+- **En local (le plus simple !)** : double-cliquez directement sur `index.html` dans votre navigateur !
+- **En ligne (GitHub Pages)** : activez GitHub Pages sur la branche `master` / `main` dans les paramètres du dépôt pour y jouer depuis n'importe quelle tablette, PC ou téléphone.

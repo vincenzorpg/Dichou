@@ -2,7 +2,7 @@
 
 const STORAGE_KEY = "dichou_space_marine_ce1_v1";
 
-export const DEFAULT_STATE = {
+const DEFAULT_STATE = {
   level: 1,
   xp: 0,
   switchMinutes: 0,
@@ -25,7 +25,7 @@ export const DEFAULT_STATE = {
   }
 };
 
-export function loadState() {
+function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return structuredClone(DEFAULT_STATE);
@@ -43,7 +43,7 @@ export function loadState() {
   }
 }
 
-export function saveState(state) {
+function saveState(state) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch (e) {
@@ -51,7 +51,7 @@ export function saveState(state) {
   }
 }
 
-export function resetState() {
+function resetState() {
   const fresh = structuredClone(DEFAULT_STATE);
   saveState(fresh);
   return fresh;

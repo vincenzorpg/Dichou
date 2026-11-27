@@ -1,8 +1,3 @@
-import { ARMORS, MONSTERS, PLANETS, ADRIEN_PRAISES, XP_PER_LEVEL, getArmorForLevel } from "./data.js";
-import { generateQuestion } from "./questions.js";
-import { loadState, saveState, resetState } from "./storage.js";
-import { sfx } from "./audio.js";
-
 // ==========================================
 // ÉTAT GLOBAL
 // ==========================================
@@ -25,10 +20,6 @@ let battle = {
 // UTILITAIRES DOM
 // ==========================================
 const $ = (id) => document.getElementById(id);
-
-function pick(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
 
 function showScreen(screenId) {
   document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));

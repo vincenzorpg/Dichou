@@ -1,6 +1,6 @@
 // Données du jeu : Armures d'Adrien, Bestiaire Warhammer 40k, Planètes CE1
 
-export const ARMORS = [
+const ARMORS = [
   {
     tier: 1,
     minLevel: 1,
@@ -68,7 +68,7 @@ export const ARMORS = [
   }
 ];
 
-export const MONSTERS = [
+const MONSTERS = [
   {
     id: "grot",
     name: "Grot Farceur",
@@ -297,7 +297,7 @@ export const MONSTERS = [
   }
 ];
 
-export const PLANETS = [
+const PLANETS = [
   {
     id: "campagne",
     name: "Campagne Galactique",
@@ -354,7 +354,7 @@ export const PLANETS = [
   }
 ];
 
-export const ADRIEN_PRAISES = [
+const ADRIEN_PRAISES = [
   "BIM ! En plein dans le mille !",
   "Trop fort, Adrien !",
   "Puissance Space Marine !",
@@ -363,9 +363,9 @@ export const ADRIEN_PRAISES = [
   "L'Imperium est fier de toi !"
 ];
 
-export const XP_PER_LEVEL = (level) => 80 + (level - 1) * 35;
+const XP_PER_LEVEL = (level) => 80 + (level - 1) * 35;
 
-export function getArmorForLevel(level) {
+function getArmorForLevel(level) {
   let current = ARMORS[0];
   for (const armor of ARMORS) {
     if (level >= armor.minLevel) {

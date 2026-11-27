@@ -97,4 +97,4 @@ class SoundFX {
   }
 }
 
-export const sfx = new SoundFX();
+const sfx = new SoundFX();
