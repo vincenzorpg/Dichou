@@ -36,9 +36,12 @@
         </div>
       </div>
 
-      <div id="switch-pill" class="switch-pill" title="Minutes de Nintendo Switch gagnées par Adrien">
+      <div id="switch-pill" class="switch-pill" title="Minutes de Nintendo Switch gagnées par Adrien (plafonnées par jour)">
         <span class="switch-icon">🎮</span>
-        <div class="switch-count"><span id="hud-switch-min">0</span> min de Switch</div>
+        <div class="switch-count">
+          <span id="hud-switch-min">0</span> min
+          <small id="hud-switch-daily" style="font-size:0.75rem; color:#cbd5e1; font-weight:600; margin-left:4px;">(auj. 0/45)</small>
+        </div>
       </div>
 
       <div class="hud-actions">
@@ -90,7 +93,7 @@
           <div class="boss-banner">
             <div class="boss-banner-text">
               <strong>👑 DÉFI BOSS : Big Boss Gorgutz !</strong>
-              <span>5 bonnes réponses pour le vaincre et gagner un MÉGA BONUS de +5 min de Switch !</span>
+              <span>5 bonnes réponses pour le vaincre et gagner un gros bonus (+3 min de Switch et +120 XP) !</span>
             </div>
             <button id="btn-fight-boss" class="btn-gold">⚔️ Affronter le Boss !</button>
           </div>
@@ -260,8 +263,11 @@
       <div id="parent-dashboard" style="display:none;">
         <div class="parent-section">
           <h3>🎮 Compteur de Minutes de Switch</h3>
-          <p style="font-size:1.1rem; margin-bottom:6px;">
+          <p style="font-size:1.1rem; margin-bottom:4px;">
             Solde disponible pour Adrien : <strong id="parent-switch-balance" style="color:#facc15; font-size:1.35rem;">0 min</strong>
+          </p>
+          <p style="font-size:0.92rem; color:#93c5fd; margin-bottom:8px;">
+            Gagné aujourd'hui : <strong id="parent-daily-progress">0 / 45 min</strong>
           </p>
           <div class="spend-row">
             <button class="btn-gold" data-spend="5">Encaisser 5 min</button>
@@ -290,10 +296,11 @@
               </select>
             </label>
             <label>
-              Minutes par monstre :
-              <select id="setting-multiplier" class="select-input">
-                <option value="1">Normal (1 à 5 min)</option>
-                <option value="2">Double récompense (x2)</option>
+              Plafond Switch / jour :
+              <select id="setting-daily-cap" class="select-input">
+                <option value="30">30 min / jour</option>
+                <option value="45">45 min / jour (recommandé)</option>
+                <option value="60">60 min / jour</option>
               </select>
             </label>
             <button id="btn-reset-game" class="btn-danger" style="margin-left:auto;">🗑️ Réinitialiser tout</button>

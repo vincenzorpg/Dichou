@@ -54,9 +54,11 @@ function launchConfetti(count = 36) {
 // RENDU HUD & ACCUEIL
 // ==========================================
 function renderHUD() {
+  syncDailyCounter(state);
   const armor = getArmorForLevel(state.level);
   const xpNeeded = XP_PER_LEVEL(state.level);
   const pct = Math.min(100, Math.round((state.xp / xpNeeded) * 100));
+  const dailyCap = state.settings.dailySwitchCap || 45;
 
   $("hud-avatar").src = armor.image;
   $("hud-hero-name").textContent = armor.title;
@@ -64,6 +66,7 @@ function renderHUD() {
   $("hud-xp-fill").style.width = `${pct}%`;
   $("hud-xp-text").textContent = `${state.xp} / ${xpNeeded} XP`;
   $("hud-switch-min").textContent = state.switchMinutes;
+  $("hud-switch-daily").textContent = `(auj. ${state.dailySwitchEarned}/${dailyCap})`;
   $("btn-sound").textContent = state.settings.soundEnabled ? "🔊" : "🔇";
 
   // Home Showcase
@@ -120,10 +123,13 @@ function chooseMonster(forceBoss = false) {
 }
 
 function startBattle(planetId, forceBoss = false) {
+  syncDailyCounter(state);
   const planet = PLANETS.find((p) => p.id === planetId) || PLANETS[0];
   const monster = chooseMonster(forceBoss);
   const armor = getArmorForLevel(state.level);
-  const rewardMin = monster.switchMin * (state.settings.switchMultiplier || 1);
+  const dailyCap = state.settings.dailySwitchCap || 45;
+  const remainingToday = Math.max(0, dailyCap - state.dailySwitchEarned);
+  const rewardMin = Math.min(monster.switchMin, remainingToday);
 
   battle = {
     planetId,
@@ -149,7 +155,10 @@ function startBattle(planetId, forceBoss = false) {
   $("battle-monster-name").textContent = monster.name;
   $("monster-bubble").textContent = pick(monster.taunts);
   $("monster-frame").classList.toggle("boss-frame", Boolean(monster.isBoss));
-  $("monster-reward-chip").textContent = `🎮 Récompense : +${rewardMin} min Switch`;
+  $("monster-reward-chip").textContent =
+    rewardMin > 0
+      ? `🎮 Récompense : +${rewardMin} min Switch`
+      : `⭐ Plafond Switch atteint (Mode XP Armure !)`;
 
   const isMult = planetId === "multiplia";
   $("mult-toolbar").style.display = isMult ? "flex" : "none";
@@ -331,22 +340,28 @@ function handleVictory() {
   setTimeout(() => sfx.switchCoin(), 350);
   launchConfetti(32);
 
+  syncDailyCounter(state);
   const m = battle.monster;
   const oldArmor = getArmorForLevel(state.level);
-  const gainedMin = m.switchMin * (state.settings.switchMultiplier || 1);
+  const dailyCap = state.settings.dailySwitchCap || 45;
+  const remainingToday = Math.max(0, dailyCap - state.dailySwitchEarned);
+  const gainedMin = Math.min(m.switchMin, remainingToday);
   const gainedXp = m.xp;
 
   // Update state
-  state.switchMinutes += gainedMin;
-  state.totalSwitchEarned += gainedMin;
+  if (gainedMin > 0) {
+    state.switchMinutes += gainedMin;
+    state.totalSwitchEarned += gainedMin;
+    state.dailySwitchEarned += gainedMin;
+    state.switchHistory.unshift({
+      date: new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }),
+      delta: `+${gainedMin} min`,
+      label: `Victoire : ${m.name}`
+    });
+    state.switchHistory = state.switchHistory.slice(0, 30);
+  }
   state.totalMonstersDefeated += 1;
   state.monstersLog[m.id] = (state.monstersLog[m.id] || 0) + 1;
-  state.switchHistory.unshift({
-    date: new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }),
-    delta: `+${gainedMin} min`,
-    label: `Victoire : ${m.name}`
-  });
-  state.switchHistory = state.switchHistory.slice(0, 30);
 
   // XP & Level up check
   state.xp += gainedXp;
@@ -378,8 +393,11 @@ function handleVictory() {
   pill.classList.add("pop");
 
   // Show victory modal
-  $("victory-monster-line").textContent = `« ${m.defeatLine} »`;
-  $("victory-switch").textContent = `+${gainedMin} min`;
+  const reachedCap = state.dailySwitchEarned >= dailyCap;
+  $("victory-monster-line").textContent = reachedCap
+    ? `« ${m.defeatLine} » — 🏆 Bravo ! Tu as atteint tes ${dailyCap} min de Switch du jour ! Continue pour l'XP de ton armure !`
+    : `« ${m.defeatLine} »`;
+  $("victory-switch").textContent = gainedMin > 0 ? `+${gainedMin} min` : `Max ${dailyCap}m/j`;
   $("victory-xp").textContent = `+${gainedXp} XP`;
   openModal("modal-victory");
 }
@@ -467,9 +485,12 @@ function openParentModal() {
 }
 
 function renderParentDashboard() {
+  syncDailyCounter(state);
+  const dailyCap = state.settings.dailySwitchCap || 45;
   $("parent-switch-balance").textContent = `${state.switchMinutes} min`;
+  $("parent-daily-progress").textContent = `${state.dailySwitchEarned} / ${dailyCap} min`;
   $("setting-difficulty").value = state.settings.difficulty;
-  $("setting-multiplier").value = String(state.settings.switchMultiplier);
+  $("setting-daily-cap").value = String(dailyCap);
 
   // History
   const hist = $("parent-history");
@@ -646,9 +667,11 @@ function bindEvents() {
     saveState(state);
   });
 
-  $("setting-multiplier").addEventListener("change", (e) => {
-    state.settings.switchMultiplier = Number(e.target.value);
+  $("setting-daily-cap").addEventListener("change", (e) => {
+    state.settings.dailySwitchCap = Number(e.target.value);
     saveState(state);
+    renderHUD();
+    renderParentDashboard();
   });
 
   $("btn-reset-game").addEventListener("click", () => {

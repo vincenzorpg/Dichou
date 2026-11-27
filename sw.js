@@ -1,6 +1,6 @@
 // Service Worker — Permet d'installer le jeu sur téléphone et d'y jouer 100% hors-ligne !
 
-const CACHE_NAME = "dichou-space-marine-v3";
+const CACHE_NAME = "dichou-space-marine-v4";
 
 const ASSETS_TO_CACHE = [
   "./",
