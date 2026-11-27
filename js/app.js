@@ -788,7 +788,7 @@ function setupCloudSync() {
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") runCloudSync();
   });
-  setInterval(runCloudSync, 20000);
+  setInterval(runCloudSync, 5000);
 }
 
 // ==========================================

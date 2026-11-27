@@ -120,6 +120,12 @@ function saveState(state, skipCloud = false) {
   }
 }
 
+function hasProgress(st) {
+  return Boolean(
+    st && (st.level > 1 || st.xp > 0 || st.totalMonstersDefeated > 0 || st.totalSwitchEarned > 0 || st.switchMinutes > 0)
+  );
+}
+
 async function syncWithCloud(localState) {
   try {
     notifyCloudStatus("syncing", "Synchronisation...");
@@ -134,14 +140,38 @@ async function syncWithCloud(localState) {
     }
     const cloudRaw = await res.json();
     if (!cloudRaw) {
-      // Base vide : on envoie l'état local pour initialiser Firebase
-      if (!localState.updatedAt) localState.updatedAt = Date.now();
-      await pushStateToCloud(localState);
+      // Base vide : on pousse seulement si cet appareil a de la progression
+      if (hasProgress(localState)) {
+        if (!localState.updatedAt) localState.updatedAt = Date.now();
+        await pushStateToCloud(localState);
+      } else {
+        notifyCloudStatus("ok", "Synchronisé ☁️");
+      }
       return { state: localState, changed: false };
     }
     const cloudState = normalizeState(cloudRaw);
     const localTs = Number(localState.updatedAt || 0);
     const cloudTs = Number(cloudState.updatedAt || 0);
+    const localHas = hasProgress(localState);
+    const cloudHas = hasProgress(cloudState);
+
+    // Protège la progression locale contre un profil cloud vide (0 XP)
+    if (localHas && !cloudHas) {
+      localState.updatedAt = Date.now();
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(localState));
+      } catch {}
+      await pushStateToCloud(localState);
+      return { state: localState, changed: false };
+    }
+
+    if (cloudHas && !localHas) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudState));
+      } catch {}
+      notifyCloudStatus("ok", "Synchronisé ☁️");
+      return { state: cloudState, changed: true };
+    }
 
     if (cloudTs > localTs) {
       try {

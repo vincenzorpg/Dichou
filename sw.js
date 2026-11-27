@@ -1,6 +1,6 @@
 // Service Worker — Permet d'installer le jeu sur téléphone et d'y jouer 100% hors-ligne !
 
-const CACHE_NAME = "dichou-space-marine-v6";
+const CACHE_NAME = "dichou-space-marine-v7";
 
 const ASSETS_TO_CACHE = [
   "./",
@@ -47,9 +47,35 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
-  if (event.request.url.includes("firebasedatabase.app") || event.request.url.includes("firebaseio.com")) {
+  const url = event.request.url;
+  if (url.includes("firebasedatabase.app") || url.includes("firebaseio.com")) {
     return;
   }
+
+  // Network-First pour HTML / JS / CSS afin d'avoir toujours les mises à jour immédiatement
+  const isCode =
+    event.request.mode === "navigate" ||
+    url.endsWith(".html") ||
+    url.endsWith(".js") ||
+    url.endsWith(".css") ||
+    url.endsWith(".webmanifest");
+
+  if (isCode) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((c) => c || caches.match("./index.html")))
+    );
+    return;
+  }
+
+  // Cache-First pour les images (rapide & hors-ligne)
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
