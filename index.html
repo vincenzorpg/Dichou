@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adrien le Space Marine — Aventure CE1 &amp; Minutes de Switch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="starfield" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <!-- TOP HUD -->
+    <header class="hud-bar">
+      <div class="hud-hero">
+        <img id="hud-avatar" class="hud-avatar" src="assets/images/armor_1.jpg" alt="Adrien Space Marine" />
+        <div class="hud-hero-info">
+          <div class="hud-title">
+            <span id="hud-hero-name">Recrue Adrien</span>
+            <span id="hud-level" class="level-badge">Niv. 1</span>
+          </div>
+          <div class="xp-bar-wrap">
+            <div class="xp-bar"><div id="hud-xp-fill" class="xp-fill" style="width: 0%"></div></div>
+            <span id="hud-xp-text" class="xp-text">0 / 80 XP</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="switch-pill" class="switch-pill" title="Minutes de Nintendo Switch gagnées par Adrien">
+        <span class="switch-icon">🎮</span>
+        <div class="switch-count"><span id="hud-switch-min">0</span> min de Switch</div>
+      </div>
+
+      <div class="hud-actions">
+        <button id="btn-gallery" class="icon-btn" title="Armures et Bestiaire">🛡️ Armurerie</button>
+        <button id="btn-sound" class="icon-btn" title="Activer / couper le son">🔊</button>
+        <button id="btn-parents" class="icon-btn" title="Espace Parents (PIN)">🔒 Parents</button>
+      </div>
+    </header>
+
+    <!-- SCREEN 1: GALACTIC MISSION SELECT -->
+    <main id="screen-home" class="screen active">
+      <div class="home-grid">
+        <!-- Adrien Armor Showcase -->
+        <aside class="hero-showcase">
+          <div id="home-armor-tier" class="hero-rank-label">Armure Niveau 1 / 5</div>
+          <div class="hero-portrait-frame">
+            <img id="home-hero-img" src="assets/images/armor_1.jpg" alt="Armure d'Adrien" />
+          </div>
+          <div id="home-armor-name" class="hero-armor-name">Scout de l'Espace</div>
+          <div id="home-weapon-tag" class="hero-weapon-tag">⚔️ Blaster d'Entraînement</div>
+          <div id="home-next-armor" class="hero-next-armor">
+            Prochaine armure au Niveau 3 : Space Marine Tactique !
+          </div>
+          <div class="hero-mini-stats">
+            <div class="mini-stat">
+              <strong id="home-defeated">0</strong>
+              <span>Monstres battus</span>
+            </div>
+            <div class="mini-stat">
+              <strong id="home-total-switch">0 min</strong>
+              <span>Switch gagnées</span>
+            </div>
+          </div>
+          <button id="btn-open-armory-home" class="btn-secondary btn-full">🛡️ Voir mes 5 Armures &amp; Monstres</button>
+        </aside>
+
+        <!-- Planets Selection -->
+        <section class="planets-panel">
+          <div class="section-header">
+            <div>
+              <h1>🚀 Choisis ta Mission CE1, Adrien !</h1>
+              <p>Bats les monstres de l'espace pour faire évoluer ton armure et gagner des minutes de Switch !</p>
+            </div>
+          </div>
+
+          <div id="planets-grid" class="planets-grid"></div>
+
+          <div class="boss-banner">
+            <div class="boss-banner-text">
+              <strong>👑 DÉFI BOSS : Big Boss Gorgutz !</strong>
+              <span>5 bonnes réponses pour le vaincre et gagner un MÉGA BONUS de +5 min de Switch !</span>
+            </div>
+            <button id="btn-fight-boss" class="btn-gold">⚔️ Affronter le Boss !</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- SCREEN 2: BATTLE ARENA -->
+    <section id="screen-battle" class="screen">
+      <div class="battle-topbar">
+        <button id="btn-back-home" class="icon-btn">⬅️ Carte Galactique</button>
+        <div id="battle-mission-name" class="mission-pill">🚀 Campagne Galactique</div>
+        <div id="battle-combo" class="combo-pill">⚡ Combo : 0 / 3</div>
+      </div>
+
+      <div class="arena-stage">
+        <div id="fx-layer" class="fx-layer"></div>
+
+        <!-- Adrien (Left) -->
+        <div class="fighter-side">
+          <div id="hero-bubble" class="speech-bubble hero-bubble">Pour la Galaxie ! C'est parti !</div>
+          <div id="hero-frame" class="fighter-frame">
+            <img id="battle-hero-img" src="assets/images/armor_1.jpg" alt="Adrien" />
+          </div>
+          <div id="battle-hero-name" class="fighter-name">Recrue Adrien</div>
+          <div id="hero-shields" class="hp-hearts" title="Bouclier énergétique d'Adrien">🛡️🛡️🛡️</div>
+        </div>
+
+        <!-- Center VS -->
+        <div class="vs-center">
+          <div class="vs-badge">VS</div>
+        </div>
+
+        <!-- Warhammer 40k Monster (Right) -->
+        <div class="fighter-side">
+          <div id="monster-bubble" class="speech-bubble">Hihi ! Prêt pour le combat ?</div>
+          <div id="monster-frame" class="fighter-frame monster-frame">
+            <img id="battle-monster-img" src="assets/images/monster_grot.jpg" alt="Monstre" />
+          </div>
+          <div id="battle-monster-name" class="fighter-name">Grot Farceur</div>
+          <div id="monster-hp" class="hp-hearts">❤️❤️❤️</div>
+          <div id="monster-reward-chip" class="reward-chip">🎮 Récompense : +1 min Switch</div>
+        </div>
+      </div>
+
+      <!-- CE1 Question Panel -->
+      <div class="question-panel">
+        <div class="question-meta">
+          <span id="question-tag" class="question-tag">Addition</span>
+          <span id="question-super-hint" style="font-size:0.85rem; color:#facc15; font-weight:700;"></span>
+        </div>
+        <div class="question-body">
+          <div id="question-visual"></div>
+          <div id="question-prompt" class="question-prompt">Chargement de la mission...</div>
+        </div>
+        <div id="choices-grid" class="choices-grid"></div>
+        <div id="feedback-banner" class="feedback-banner">
+          <span id="feedback-text"></span>
+          <button id="btn-next-question" class="btn-primary" style="display:none;">Continuer ➡️</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL: VICTORY -->
+  <div id="modal-victory" class="modal-backdrop">
+    <div class="modal-card gold-border">
+      <h2 style="font-size:1.9rem; color:#facc15; margin-bottom:6px;">🏆 MONSTRE VAINCU !</h2>
+      <p id="victory-monster-line" style="color:#e2e8f0; font-size:1.05rem; margin-bottom:10px;"></p>
+      <div class="victory-rewards">
+        <div class="reward-box">
+          <strong id="victory-switch">+1 min</strong>
+          <span>🎮 Minutes de Switch</span>
+        </div>
+        <div class="reward-box">
+          <strong id="victory-xp">+35 XP</strong>
+          <span>⭐ Expérience</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
+        <button id="btn-next-monster" class="btn-gold">⚔️ Monstre Suivant !</button>
+        <button id="btn-victory-home" class="btn-secondary">🗺️ Carte Galactique</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LEVEL UP & NEW ARMOR -->
+  <div id="modal-levelup" class="modal-backdrop">
+    <div class="modal-card gold-border">
+      <h2 id="levelup-title" style="font-size:1.9rem; color:#facc15;">🌟 NIVEAU SUPÉRIEUR !</h2>
+      <p id="levelup-subtitle" style="color:#93c5fd; font-size:1.1rem; font-weight:700; margin-top:4px;"></p>
+      <img id="levelup-img" class="levelup-img" src="assets/images/armor_2.jpg" alt="Nouvelle armure" />
+      <p id="levelup-desc" style="color:#e2e8f0; margin-bottom:16px;"></p>
+      <button id="btn-close-levelup" class="btn-gold">🚀 Trop cool, je continue !</button>
+    </div>
+  </div>
+
+  <!-- MODAL: ARMURERIE & BESTIAIRE -->
+  <div id="modal-gallery" class="modal-backdrop">
+    <div class="modal-card wide">
+      <button class="modal-close" data-close="modal-gallery">✕</button>
+      <h2 style="margin-bottom:12px; color:#facc15;">🛡️ Armurerie &amp; Bestiaire Galactique</h2>
+      <div class="tabs">
+        <button id="tab-armors" class="tab-btn active">🛡️ Les 5 Armures d'Adrien</button>
+        <button id="tab-monsters" class="tab-btn">👾 Bestiaire Warhammer 40k</button>
+      </div>
+      <div id="gallery-content" class="gallery-grid"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: ESPACE PARENTS -->
+  <div id="modal-parents" class="modal-backdrop">
+    <div class="modal-card wide">
+      <button class="modal-close" data-close="modal-parents">✕</button>
+      <h2 style="margin-bottom:12px; color:#38bdf8;">🔒 Espace Parents</h2>
+
+      <!-- PIN Gate -->
+      <div id="parent-pin-gate" style="text-align:center; padding:12px 0;">
+        <p style="color:#cbd5e1; margin-bottom:6px;">Entre le code PIN parent (par défaut : <strong>1234</strong>)</p>
+        <input id="parent-pin-input" class="pin-input" type="password" maxlength="4" inputmode="numeric" placeholder="••••" />
+        <p id="parent-pin-error" style="color:#f87171; font-size:0.9rem; min-height:20px;"></p>
+        <button id="btn-unlock-parents" class="btn-primary">Déverrouiller</button>
+      </div>
+
+      <!-- Parent Dashboard -->
+      <div id="parent-dashboard" style="display:none;">
+        <div class="parent-section">
+          <h3>🎮 Compteur de Minutes de Switch</h3>
+          <p style="font-size:1.1rem; margin-bottom:6px;">
+            Solde disponible pour Adrien : <strong id="parent-switch-balance" style="color:#facc15; font-size:1.35rem;">0 min</strong>
+          </p>
+          <div class="spend-row">
+            <button class="btn-gold" data-spend="5">Encaisser 5 min</button>
+            <button class="btn-gold" data-spend="10">Encaisser 10 min</button>
+            <button class="btn-gold" data-spend="15">Encaisser 15 min</button>
+            <button class="btn-primary" data-spend="all">Tout encaisser</button>
+            <button class="btn-secondary" id="btn-add-bonus-5">+5 min Bonus</button>
+          </div>
+          <div id="parent-history" class="history-list" style="margin-top:10px;"></div>
+        </div>
+
+        <div class="parent-section">
+          <h3>📊 Bilan Pédagogique CE1</h3>
+          <div id="parent-stats"></div>
+        </div>
+
+        <div class="parent-section">
+          <h3>⚙️ Réglages de la partie</h3>
+          <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:center;">
+            <label>
+              Niveau CE1 :
+              <select id="setting-difficulty" class="select-input">
+                <option value="debut">Début CE1 (plus doux)</option>
+                <option value="milieu">Milieu CE1 (standard)</option>
+                <option value="fin">Fin CE1 (défi !)</option>
+              </select>
+            </label>
+            <label>
+              Minutes par monstre :
+              <select id="setting-multiplier" class="select-input">
+                <option value="1">Normal (1 à 5 min)</option>
+                <option value="2">Double récompense (x2)</option>
+              </select>
+            </label>
+            <button id="btn-reset-game" class="btn-danger" style="margin-left:auto;">🗑️ Réinitialiser tout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#3b1228"/>
+      <stop offset="60%" stop-color="#141836"/>
+      <stop offset="100%" stop-color="#0d152b"/>
+    </radialGradient>
+    <radialGradient id="bodyGrad" cx="38%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#ff6b6b"/>
+      <stop offset="55%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#991b1b"/>
+    </radialGradient>
+    <linearGradient id="hornGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)"/>
+  <!-- Stars -->
+  <circle cx="52" cy="60" r="2.5" fill="#fff" opacity="0.8"/>
+  <circle cx="340" cy="70" r="3" fill="#fde047" opacity="0.8"/>
+  <circle cx="310" cy="330" r="2" fill="#fff" opacity="0.6"/>
+  <circle cx="70" cy="310" r="2.5" fill="#fca5a5" opacity="0.7"/>
+  <circle cx="200" cy="40" r="2" fill="#fff" opacity="0.7"/>
+  <!-- Shadow -->
+  <ellipse cx="205" cy="348" rx="95" ry="18" fill="#000" opacity="0.45"/>
+  <!-- Tail -->
+  <path d="M 295 235 Q 345 215 352 175 Q 332 195 300 205 Z" fill="#b91c1c" stroke="#450a0a" stroke-width="6" stroke-linejoin="round"/>
+  <!-- Back leg -->
+  <path d="M 225 280 L 245 335 L 280 340 Q 285 322 260 318 L 250 270 Z" fill="#b91c1c" stroke="#450a0a" stroke-width="6" stroke-linejoin="round"/>
+  <!-- Front leg -->
+  <path d="M 145 285 L 135 340 L 100 342 Q 95 324 120 320 L 128 272 Z" fill="#dc2626" stroke="#450a0a" stroke-width="6" stroke-linejoin="round"/>
+  <!-- Horns -->
+  <path d="M 155 105 Q 130 55 162 68 Q 172 82 180 100 Z" fill="url(#hornGrad)" stroke="#450a0a" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M 220 98 Q 248 48 265 72 Q 252 90 242 108 Z" fill="url(#hornGrad)" stroke="#450a0a" stroke-width="6" stroke-linejoin="round"/>
+  <!-- Spikes on back -->
+  <polygon points="278,125 312,115 296,152" fill="#fde047" stroke="#450a0a" stroke-width="5" stroke-linejoin="round"/>
+  <polygon points="295,165 332,165 304,195" fill="#fde047" stroke="#450a0a" stroke-width="5" stroke-linejoin="round"/>
+  <!-- Main round Squig body -->
+  <ellipse cx="198" cy="198" rx="112" ry="102" fill="url(#bodyGrad)" stroke="#450a0a" stroke-width="7"/>
+  <!-- Belly highlight -->
+  <ellipse cx="160" cy="140" rx="34" ry="18" fill="#fca5a5" opacity="0.4" transform="rotate(-18 160 140)"/>
+  <!-- Big goofy open mouth -->
+  <path d="M 94 198 Q 168 178 232 212 Q 218 286 146 276 Q 94 264 94 198 Z" fill="#450a0a" stroke="#290404" stroke-width="6"/>
+  <!-- Tongue -->
+  <path d="M 122 252 Q 162 232 198 258 Q 172 278 134 272 Z" fill="#f472b6"/>
+  <!-- Upper Teeth -->
+  <polygon points="108,198 124,228 138,194" fill="#fffbeb" stroke="#450a0a" stroke-width="4" stroke-linejoin="round"/>
+  <polygon points="146,192 162,232 178,195" fill="#fffbeb" stroke="#450a0a" stroke-width="4" stroke-linejoin="round"/>
+  <polygon points="186,196 202,226 218,205" fill="#fffbeb" stroke="#450a0a" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Lower Teeth -->
+  <polygon points="116,264 134,238 148,268" fill="#fffbeb" stroke="#450a0a" stroke-width="4" stroke-linejoin="round"/>
+  <polygon points="178,270 194,242 208,262" fill="#fffbeb" stroke="#450a0a" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Goofy cartoon eyes -->
+  <circle cx="136" cy="150" r="24" fill="#fef08a" stroke="#450a0a" stroke-width="6"/>
+  <circle cx="129" cy="150" r="10" fill="#1e1b4b"/>
+  <circle cx="125" cy="145" r="4" fill="#fff"/>
+  <circle cx="195" cy="146" r="28" fill="#fef08a" stroke="#450a0a" stroke-width="6"/>
+  <circle cx="187" cy="146" r="11" fill="#1e1b4b"/>
+  <circle cx="182" cy="140" r="4.5" fill="#fff"/>
+  <!-- Expressive eyebrows -->
+  <path d="M 110 124 Q 138 112 160 130" fill="none" stroke="#450a0a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 172 126 Q 200 108 225 122" fill="none" stroke="#450a0a" stroke-width="7" stroke-linecap="round"/>
+</svg>

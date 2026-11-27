@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <radialGradient id="cbg" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#3b1d5e"/>
+      <stop offset="60%" stop-color="#171436"/>
+      <stop offset="100%" stop-color="#0d152b"/>
+    </radialGradient>
+    <linearGradient id="armorPurple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="55%" stop-color="#7e22ce"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="goldTrim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#cbg)"/>
+  <!-- Lightning sparks -->
+  <polyline points="55,90 78,125 65,130 90,165" fill="none" stroke="#e879f9" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <polyline points="345,80 322,118 338,124 315,160" fill="none" stroke="#c084fc" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <circle cx="70" cy="320" r="3" fill="#fde047" opacity="0.8"/>
+  <circle cx="330" cy="300" r="2.5" fill="#fff" opacity="0.7"/>
+  <!-- Shadow -->
+  <ellipse cx="200" cy="358" rx="95" ry="16" fill="#000" opacity="0.45"/>
+  <!-- Power Axe on left -->
+  <line x1="78" y1="115" x2="112" y2="310" stroke="#475569" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 48 118 Q 75 88 106 112 L 96 178 Q 62 192 42 158 Z" fill="#e879f9" stroke="#facc15" stroke-width="6" stroke-linejoin="round"/>
+  <!-- Legs -->
+  <rect x="135" y="265" width="52" height="82" rx="18" fill="url(#armorPurple)" stroke="#2e1065" stroke-width="6"/>
+  <rect x="212" y="265" width="52" height="82" rx="18" fill="url(#armorPurple)" stroke="#2e1065" stroke-width="6"/>
+  <rect x="128" y="325" width="64" height="28" rx="12" fill="url(#goldTrim)" stroke="#2e1065" stroke-width="5"/>
+  <rect x="206" y="325" width="64" height="28" rx="12" fill="url(#goldTrim)" stroke="#2e1065" stroke-width="5"/>
+  <!-- Torso -->
+  <rect x="132" y="165" width="136" height="112" rx="28" fill="url(#armorPurple)" stroke="#2e1065" stroke-width="6"/>
+  <!-- Gold chest star -->
+  <polygon points="200,192 210,214 234,218 216,232 220,254 200,242 180,254 184,232 166,218 190,214" fill="url(#goldTrim)" stroke="#2e1065" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Huge spiky pauldrons -->
+  <ellipse cx="115" cy="195" rx="46" ry="42" fill="url(#armorPurple)" stroke="url(#goldTrim)" stroke-width="8"/>
+  <ellipse cx="285" cy="195" rx="46" ry="42" fill="url(#armorPurple)" stroke="url(#goldTrim)" stroke-width="8"/>
+  <polygon points="90,158 76,126 114,150" fill="#fde047" stroke="#2e1065" stroke-width="4"/>
+  <polygon points="310,158 324,126 286,150" fill="#fde047" stroke="#2e1065" stroke-width="4"/>
+  <!-- Big curved comical horns -->
+  <path d="M 152 115 Q 90 95 98 48 Q 124 76 164 95 Z" fill="#fef3c7" stroke="#2e1065" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M 248 115 Q 310 95 302 48 Q 276 76 236 95 Z" fill="#fef3c7" stroke="#2e1065" stroke-width="6" stroke-linejoin="round"/>
+  <!-- Helmet -->
+  <rect x="148" y="88" width="104" height="88" rx="34" fill="url(#armorPurple)" stroke="url(#goldTrim)" stroke-width="7"/>
+  <!-- Grumpy glowing eyes -->
+  <polygon points="164,122 194,132 166,140" fill="#ff3b3b" stroke="#2e1065" stroke-width="3"/>
+  <polygon points="236,122 206,132 234,140" fill="#ff3b3b" stroke="#2e1065" stroke-width="3"/>
+  <!-- Grumpy grille mouth -->
+  <rect x="174" y="148" width="52" height="18" rx="6" fill="#1e1b4b" stroke="url(#goldTrim)" stroke-width="4"/>
+  <line x1="188" y1="148" x2="188" y2="166" stroke="#fde047" stroke-width="3"/>
+  <line x1="200" y1="148" x2="200" y2="166" stroke="#fde047" stroke-width="3"/>
+  <line x1="212" y1="148" x2="212" y2="166" stroke="#fde047" stroke-width="3"/>
+</svg>
