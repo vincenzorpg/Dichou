@@ -81,10 +81,10 @@ function buildClockSVG(hours, minutes) {
 function genCalcul(difficulty) {
   const types =
     difficulty === "debut"
-      ? ["add_simple", "sub_simple", "comp10", "double", "mult_easy", "probleme"]
+      ? ["add_simple", "sub_simple", "comp10", "double", "probleme"]
       : difficulty === "fin"
-      ? ["add_hard", "sub_hard", "comp100", "double_moitie", "mult_ce1", "probleme"]
-      : ["add_med", "sub_med", "comp10", "comp100", "double_moitie", "mult_ce1", "probleme"];
+      ? ["add_hard", "sub_hard", "comp100", "double_moitie", "mult_easy", "probleme"]
+      : ["add_med", "sub_med", "comp10", "comp100", "double_moitie", "probleme"];
 
   const t = pick(types);
 
@@ -235,13 +235,12 @@ function genCalcul(difficulty) {
       };
     },
     () => {
-      const packs = randInt(3, 6);
-      const each = pick([2, 5, 10]);
-      const ans = packs * each;
+      const a = randInt(6, 15);
+      const ans = a * 2;
       return {
-        prompt: `Adrien ouvre ${packs} caisses spatiales. Chaque caisse contient ${each} étoiles d'or. Combien d'étoiles en tout ?`,
+        prompt: `Adrien a ${a} étoiles d'or et trouve exactement le DOUBLE dans un coffre ! Combien a-t-il trouvé ?`,
         ans,
-        hint: `On multiplie : ${packs} × ${each} = ${ans} étoiles !`
+        hint: `Le double de ${a}, c'est ${a} + ${a} = ${ans} étoiles !`
       };
     }
   ];
@@ -537,9 +536,73 @@ function genMonde() {
 }
 
 // ==========================================
+// 6. PLANÈTE MULTIPLIA (Apprendre les tables en jouant !)
+// ==========================================
+function buildMultiplicationVisual(groups, perGroup, icon) {
+  let html = `<div class="mult-groups">`;
+  for (let g = 0; g < groups; g++) {
+    html += `<div class="mult-group">`;
+    for (let i = 0; i < perGroup; i++) {
+      html += `<span>${icon}</span>`;
+    }
+    html += `</div>`;
+  }
+  html += `</div>`;
+  const repeated = Array(groups).fill(perGroup).join(" + ");
+  html += `<div class="mult-repeated">${groups} paquets de ${perGroup} = <strong>${repeated}</strong></div>`;
+  return html;
+}
+
+function genMultiplicationLearn(tableChoice = 2) {
+  const table = Number(tableChoice) || 2;
+  const icons = ["⭐", "🚀", "🛡️", "⚡", "💎"];
+  const icon = pick(icons);
+
+  // 75% visuel + calcul direct, 25% comprendre le lien addition <-> multiplication
+  const mode = Math.random() < 0.25 ? "link" : "visual";
+  const maxFactor = table === 10 ? 9 : 6; // Progressif et visuelle-friendly !
+  const factor = randInt(2, maxFactor);
+  const ans = factor * table;
+
+  if (mode === "link") {
+    const repeated = Array(factor).fill(table).join(" + ");
+    const correctExpr = `${factor} × ${table}`;
+    const choices = new Set([correctExpr]);
+    const candidates = [
+      `${factor + 1} × ${table}`,
+      `${Math.max(1, factor - 1)} × ${table}`,
+      `${factor} + ${table}`,
+      `${table} × ${table}`
+    ];
+    for (const c of candidates) {
+      if (choices.size < 4 && c !== correctExpr) choices.add(c);
+    }
+    return {
+      subject: "multiplia",
+      tag: `Découverte Table de ${table}`,
+      prompt: `À quelle multiplication correspond : ${repeated} ?`,
+      visual: buildMultiplicationVisual(factor, table, icon),
+      choices: shuffle([...choices]),
+      answer: correctExpr,
+      hint: `Il y a ${factor} paquets de ${table}, donc ça s'écrit ${factor} × ${table} (= ${ans}) !`
+    };
+  }
+
+  return {
+    subject: "multiplia",
+    tag: `Table de ${table} (Visuel)`,
+    prompt: `Combien font ${factor} × ${table} ? (Tu peux compter les paquets !)`,
+    visual: buildMultiplicationVisual(factor, table, icon),
+    choices: makeNumericChoices(ans, Math.max(6, table * 2), 2),
+    answer: String(ans),
+    hint: `${factor} paquets de ${table} (${Array(factor).fill(table).join(" + ")}) = ${ans} !`
+  };
+}
+
+// ==========================================
 // POINT D'ENTRÉE PRINCIPAL
 // ==========================================
-function generateQuestion(planetId, difficulty = "milieu") {
+function generateQuestion(planetId, difficulty = "milieu", extra = {}) {
   let target = planetId;
   if (planetId === "campagne") {
     target = pick(["calcul", "numeration", "grammaire", "orthographe", "monde"]);
@@ -547,6 +610,8 @@ function generateQuestion(planetId, difficulty = "milieu") {
   switch (target) {
     case "calcul":
       return genCalcul(difficulty);
+    case "multiplia":
+      return genMultiplicationLearn(extra.multTable || 2);
     case "numeration":
       return genNumeration(difficulty);
     case "grammaire":

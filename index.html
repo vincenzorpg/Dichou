@@ -138,6 +138,19 @@
 
       <!-- CE1 Question Panel -->
       <div class="question-panel">
+        <div id="mult-toolbar" class="mult-toolbar" style="display:none;">
+          <div class="mult-table-pills">
+            <span style="font-size:0.86rem; color:#fde047; font-weight:700;">Choisis ta table :</span>
+            <button class="table-pill active" data-table="2">×2</button>
+            <button class="table-pill" data-table="3">×3</button>
+            <button class="table-pill" data-table="4">×4</button>
+            <button class="table-pill" data-table="5">×5</button>
+            <button class="table-pill" data-table="10">×10</button>
+          </div>
+          <button id="btn-toggle-cheatsheet" class="icon-btn" style="padding:5px 10px; font-size:0.82rem;">📖 Voir la table</button>
+        </div>
+        <div id="mult-cheatsheet" class="mult-cheatsheet" style="display:none;"></div>
+
         <div class="question-meta">
           <span id="question-tag" class="question-tag">Addition</span>
           <span id="question-super-hint" style="font-size:0.85rem; color:#facc15; font-weight:700;"></span>

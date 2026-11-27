@@ -832,6 +832,95 @@ button {
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
 }
 
+/* Planète Multiplia — Apprentissage visuel des tables */
+.mult-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(250, 204, 21, 0.35);
+  border-radius: 14px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+
+.mult-table-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.table-pill {
+  background: rgba(30, 41, 59, 0.95);
+  color: #e2e8f0;
+  border: 2px solid rgba(148, 163, 184, 0.35);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.table-pill.active {
+  background: linear-gradient(135deg, #facc15, #f59e0b);
+  color: #1e1b4b;
+  border-color: #fef08a;
+}
+
+.mult-cheatsheet {
+  background: rgba(15, 23, 42, 0.88);
+  border: 2px solid rgba(56, 189, 248, 0.45);
+  border-radius: 14px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #e0f2fe;
+}
+
+.mult-cheatsheet span {
+  background: rgba(30, 58, 138, 0.55);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(96, 165, 250, 0.35);
+}
+
+.mult-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.mult-group {
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(250, 204, 21, 0.5);
+  border-radius: 14px;
+  padding: 6px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 140px;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.mult-repeated {
+  text-align: center;
+  font-size: 0.98rem;
+  color: #fde047;
+  font-weight: 700;
+}
+
 .question-prompt {
   font-size: 1.4rem;
   font-weight: 700;

@@ -310,11 +310,20 @@ const PLANETS = [
   {
     id: "calcul",
     name: "Planète Calculia",
-    subtitle: "Additions, soustractions, tables, doubles",
+    subtitle: "Additions, soustractions, doubles, compléments",
     icon: "➕",
     color: "#f59e0b",
     gradient: "linear-gradient(135deg, #d97706, #ea580c)",
     badge: "Maths"
+  },
+  {
+    id: "multiplia",
+    name: "Planète Multiplia",
+    subtitle: "Apprendre les tables en jouant avec des dessins !",
+    icon: "⭐",
+    color: "#eab308",
+    gradient: "linear-gradient(135deg, #ca8a04, #16a34a)",
+    badge: "Tables"
   },
   {
     id: "numeration",

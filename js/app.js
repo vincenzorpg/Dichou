@@ -6,6 +6,7 @@ sfx.setEnabled(state.settings.soundEnabled);
 
 let battle = {
   planetId: "campagne",
+  multTable: 2,
   monster: null,
   monsterHp: 3,
   monsterMaxHp: 3,
@@ -126,6 +127,7 @@ function startBattle(planetId, forceBoss = false) {
 
   battle = {
     planetId,
+    multTable: battle.multTable || 2,
     monster,
     monsterHp: monster.hp,
     monsterMaxHp: monster.hp,
@@ -149,9 +151,23 @@ function startBattle(planetId, forceBoss = false) {
   $("monster-frame").classList.toggle("boss-frame", Boolean(monster.isBoss));
   $("monster-reward-chip").textContent = `🎮 Récompense : +${rewardMin} min Switch`;
 
+  const isMult = planetId === "multiplia";
+  $("mult-toolbar").style.display = isMult ? "flex" : "none";
+  $("mult-cheatsheet").style.display = "none";
+  if (isMult) renderMultCheatsheet();
+
   updateBattleBars();
   showScreen("screen-battle");
   loadNextQuestion();
+}
+
+function renderMultCheatsheet() {
+  const t = battle.multTable || 2;
+  const items = [];
+  for (let i = 1; i <= 10; i++) {
+    items.push(`<span>${i} × ${t} = ${i * t}</span>`);
+  }
+  $("mult-cheatsheet").innerHTML = items.join("");
 }
 
 function updateBattleBars() {
@@ -187,7 +203,7 @@ function loadNextQuestion() {
     document.activeElement.blur();
   }
   battle.locked = false;
-  battle.question = generateQuestion(battle.planetId, state.settings.difficulty);
+  battle.question = generateQuestion(battle.planetId, state.settings.difficulty, { multTable: battle.multTable });
 
   $("question-tag").textContent = battle.question.tag;
   $("question-prompt").textContent = battle.question.prompt;
@@ -474,6 +490,7 @@ function renderParentDashboard() {
   // Stats
   const labels = {
     calcul: "➕ Calcul",
+    multiplia: "⭐ Tables de multiplication",
     numeration: "⏰ Numération & Heure",
     grammaire: "📖 Grammaire & Conjugaison",
     orthographe: "✏️ Orthographe",
@@ -535,6 +552,23 @@ function bindEvents() {
   $("btn-next-question").addEventListener("click", () => {
     sfx.click();
     loadNextQuestion();
+  });
+
+  // Planète Multiplia : sélecteur de table & aide visuelle
+  document.querySelectorAll(".table-pill").forEach((pill) => {
+    pill.addEventListener("click", () => {
+      sfx.click();
+      battle.multTable = Number(pill.dataset.table);
+      document.querySelectorAll(".table-pill").forEach((p) => p.classList.toggle("active", p === pill));
+      renderMultCheatsheet();
+      loadNextQuestion();
+    });
+  });
+
+  $("btn-toggle-cheatsheet").addEventListener("click", () => {
+    sfx.click();
+    const cs = $("mult-cheatsheet");
+    cs.style.display = cs.style.display === "none" ? "flex" : "none";
   });
 
   $("btn-next-monster").addEventListener("click", () => {

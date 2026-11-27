@@ -12,6 +12,7 @@ const DEFAULT_STATE = {
   switchHistory: [], // { date, delta, label }
   stats: {
     calcul: { ok: 0, total: 0 },
+    multiplia: { ok: 0, total: 0 },
     numeration: { ok: 0, total: 0 },
     grammaire: { ok: 0, total: 0 },
     orthographe: { ok: 0, total: 0 },
